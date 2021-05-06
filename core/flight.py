@@ -57,14 +57,24 @@ class Flight:
     def location(self):
         return 'Images/' + self.id
 
-    def __init__(self, flight_id, flight_data: dict, file_handler):
+    def __init__(self, flight_id, flight_data: dict, file_handler, valid_encounter=None):
         self.id = flight_id
         self.frames = {}
         self.detected_objects = {}
         self.file_handler = file_handler
         self.metadata = FlightMetadata(flight_data['metadata'])
+        self.valid_encounter = valid_encounter
         for entity in flight_data['entities']:
             frame_id = entity['blob']['frame']
+
+            if self.valid_encounter is not None:
+                valid = False
+                for encounter in self.valid_encounter:
+                    if encounter["framemin"] <= int(frame_id) <= encounter["framemax"]:
+                        valid = True
+
+                if not valid:
+                    continue
 
             if frame_id not in self.frames:
                 self.frames[frame_id] = Frame(entity, self.file_handler, self)
@@ -92,6 +102,9 @@ class Flight:
         return self.detected_objects.values()
 
     def get_frame(self, id):
+        if self.valid_encounter is not None and id not in self.frames:
+            logger.info("frame_id not present in partial dataset")
+            return None
         return self.frames[id]
 
     def get_metadata(self):

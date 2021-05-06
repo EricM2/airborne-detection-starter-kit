@@ -10,20 +10,37 @@ class Dataset:
     metadata = None
     flights = {}
 
-    def __init__(self, local_path, s3_path, download_if_required=True):
+    def __init__(self, local_path, s3_path, download_if_required=True, partial=False):
         self.file_handler = None
+        self.partial = partial
+        self.valid_encounter = {}
         self.add(local_path, s3_path, download_if_required)
 
     def load_gt(self):
         logger.info("Loading ground truth...")
         gt_content = self.file_handler.get_file_content(self.gt_loc)
         gt = json.loads(gt_content)
+
         self.metadata = gt["metadata"]
         for flight_id in gt["samples"].keys():
-            self.flights[flight_id] = Flight(flight_id, gt["samples"][flight_id], self.file_handler)
+            if self.partial and flight_id not in self.valid_encounter:
+                logger.info("Skipping flight, not present in valid encounters: %s" % flight_id)
+                continue
+            self.flights[flight_id] = Flight(flight_id, gt["samples"][flight_id], self.file_handler, self.valid_encounter.get(flight_id))
+
+    def load_ve(self):
+        if self.partial:
+            logger.info("Loading valid encounters...")
+            ve = self.file_handler.get_file_content(self.valid_encounters_loc)
+            for valid_encounter in ve.split('\n\n    '):
+                valid_encounter = json.loads(valid_encounter)
+                if valid_encounter["flight_id"] not in self.valid_encounter:
+                    self.valid_encounter[valid_encounter["flight_id"]] = []
+                self.valid_encounter[valid_encounter["flight_id"]].append(valid_encounter)
 
     def add(self, local_path, s3_path, download_if_required=True):
         self.file_handler = FileHandler(local_path, s3_path, download_if_required)
+        self.load_ve()
         self.load_gt()
 
     def get_flight_ids(self):
@@ -32,6 +49,10 @@ class Dataset:
     @property
     def gt_loc(self):
         return 'ImageSets/groundtruth.json'
+
+    @property
+    def valid_encounters_loc(self):
+        return 'ImageSets/valid_encounters_maxRange700_maxGap3_minEncLen30.json'
 
     def get_flight_by_id(self, flight_id):
         return self.flights[flight_id]
