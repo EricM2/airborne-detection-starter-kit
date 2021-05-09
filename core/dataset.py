@@ -10,10 +10,11 @@ class Dataset:
     metadata = None
     flights = {}
 
-    def __init__(self, local_path, s3_path, download_if_required=True, partial=False):
+    def __init__(self, local_path, s3_path, download_if_required=True, partial=False, prefix=None):
         self.file_handler = None
         self.partial = partial
         self.valid_encounter = {}
+        self.prefix = prefix
         self.add(local_path, s3_path, download_if_required)
 
     def load_gt(self):
@@ -26,7 +27,7 @@ class Dataset:
             if self.partial and flight_id not in self.valid_encounter:
                 logger.info("Skipping flight, not present in valid encounters: %s" % flight_id)
                 continue
-            self.flights[flight_id] = Flight(flight_id, gt["samples"][flight_id], self.file_handler, self.valid_encounter.get(flight_id))
+            self.flights[flight_id] = Flight(flight_id, gt["samples"][flight_id], self.file_handler, self.valid_encounter.get(flight_id), prefix=self.prefix)
 
     def load_ve(self):
         if self.partial:

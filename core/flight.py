@@ -55,13 +55,16 @@ class Flight:
 
     @property
     def location(self):
+        if self.prefix:
+            return 'Images/' + self.prefix + self.id
         return 'Images/' + self.id
 
-    def __init__(self, flight_id, flight_data: dict, file_handler, valid_encounter=None):
+    def __init__(self, flight_id, flight_data: dict, file_handler, valid_encounter=None, prefix=None):
         self.id = flight_id
         self.frames = {}
         self.detected_objects = {}
         self.file_handler = file_handler
+        self.prefix = prefix
         self.metadata = FlightMetadata(flight_data['metadata'])
         self.valid_encounter = valid_encounter
         for entity in flight_data['entities']:

@@ -51,6 +51,8 @@ class Frame:
         return len(self.detected_objects)
 
     def image_path(self):
+        if self.flight.prefix:
+            return os.path.join('Images', self.flight.prefix + self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
         return os.path.join('Images', self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
 
     def image(self, type='pil'):
