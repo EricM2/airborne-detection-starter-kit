@@ -116,7 +116,7 @@ class Flight:
     def download(self, parallel=None):
         images = []
         for f in self.frames:
-            images.append(self.frames[f].image_path())
+            images.append([self.frames[f].image_s3_path(), self.frames[f].image_path()])
         self.file_handler.download_from_s3_parallel(images, parallel=parallel)
 
     def generate_video(self, speed_x=1):

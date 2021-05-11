@@ -55,6 +55,9 @@ class Frame:
             return os.path.join('Images', self.flight.prefix + self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
         return os.path.join('Images', self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
 
+    def image_s3_path(self):
+        return os.path.join('Images', self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
+
     def image(self, type='pil'):
         """
         Read the image of this frame in whichever type you want.
@@ -63,8 +66,7 @@ class Frame:
 
         By default, normal PIL.Image is returned
         """
-        file_location = self.image_path()
-        return self.file_handler.get_file_content(file_location, type)
+        return self.file_handler.get_file_content(s3_path=self.image_s3_path(), type=type, local_path=self.image_path())
 
     def image_annotated(self):
         img = self.image(type='cv2')

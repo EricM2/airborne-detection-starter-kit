@@ -14,8 +14,7 @@ class Dataset:
         self.file_handler = None
         self.partial = partial
         self.valid_encounter = {}
-        self.prefix = prefix
-        self.add(local_path, s3_path, download_if_required)
+        self.add(local_path, s3_path, download_if_required, prefix)
 
     def load_gt(self):
         logger.info("Loading ground truth...")
@@ -39,7 +38,8 @@ class Dataset:
                     self.valid_encounter[valid_encounter["flight_id"]] = []
                 self.valid_encounter[valid_encounter["flight_id"]].append(valid_encounter)
 
-    def add(self, local_path, s3_path, download_if_required=True):
+    def add(self, local_path, s3_path, download_if_required=True, prefix=None):
+        self.prefix = prefix
         self.file_handler = FileHandler(local_path, s3_path, download_if_required)
         self.load_ve()
         self.load_gt()

@@ -27,20 +27,22 @@ class FileHandler:
         o = urlparse(s3_path, allow_fragments=False)
         return o.netloc, o.path.lstrip('/')
 
-    def download_file_if_needed(self, path):
-        if not self.file_exist_locally(path):
+    def download_file_if_needed(self, s3_path, local_path):
+        if not self.file_exist_locally(local_path):
             if self.download_if_required:
-                logger.info("[download_from_s3] File not found locally, downloading: %s" % path)
-                self.create_local_directory(path)
-                self.download_from_s3(path)
+                logger.info("[download_from_s3] File not found locally, downloading: %s" % s3_path)
+                self.download_from_s3(s3_path, local_path)
 
-        return self.file_exist_locally(path)
+        return self.file_exist_locally(local_path)
 
-    def get_file_content(self, path, type='None'):
-        if not self.download_file_if_needed(path):
+    def get_file_content(self, s3_path, type='None', local_path=None):
+        if not local_path:
+            local_path = s3_path
+
+        if not self.download_file_if_needed(s3_path, local_path):
             raise FileNotFoundError
 
-        full_path = self.absolute_path_to_file_locally(path)
+        full_path = self.absolute_path_to_file_locally(local_path)
         if type.lower() == "cv2":
             return cv2.imread(full_path)
 
@@ -53,6 +55,8 @@ class FileHandler:
         return open(full_path).read()
 
     def create_local_directory(self, path):
+        if type(path) == list:
+            path = path[1]
         os.makedirs(os.path.dirname(self.absolute_path_to_file_locally(path)), exist_ok=True)
 
     def absolute_path_to_file_locally(self, path):
@@ -64,10 +68,10 @@ class FileHandler:
     def file_exist_locally(self, path):
         return os.path.isfile(self.absolute_path_to_file_locally(path))
 
-    def download_from_s3(self, path):
-        self.create_local_directory(path)
-        self._download_from_s3([self.s3_bucket, self.absolute_path_to_file_on_s3(path),
-                               self.absolute_path_to_file_locally(path)])
+    def download_from_s3(self, s3_path, local_path):
+        self.create_local_directory(local_path)
+        self._download_from_s3([self.s3_bucket, self.absolute_path_to_file_on_s3(s3_path),
+                               self.absolute_path_to_file_locally(local_path)])
 
     @staticmethod
     def _download_from_s3(config):
@@ -84,8 +88,12 @@ class FileHandler:
 
         prepare = []
         for path in paths:
-            prepare.append([self.s3_bucket, self.absolute_path_to_file_on_s3(path),
-                            self.absolute_path_to_file_locally(path)])
+            if type(path) == list:
+                prepare.append([self.s3_bucket, self.absolute_path_to_file_on_s3(path[0]),
+                                self.absolute_path_to_file_locally(path[1])])
+            else:
+                prepare.append([self.s3_bucket, self.absolute_path_to_file_on_s3(path),
+                                self.absolute_path_to_file_locally(path)])
         with multiprocessing.Pool(parallel) as pool:
             pool.map(self._download_from_s3, prepare)
 
