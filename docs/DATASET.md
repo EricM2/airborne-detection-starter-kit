@@ -15,8 +15,9 @@ Airborne objects usually appear quite small at the distances which are relevant 
 ## Accessing Training Dataset
 
 The complete training dataset size is ~>11TB.
+You can also download partial dataset (500G) using `partial=True` flag in `Dataset`. It includes all the frames with valid encounter of planned airborne object.
 
-You can access the same in public S3 bucket hosted at `s3://airborne-obj-detection-challenge-training/`.
+You can access the dataset in public S3 bucket hosted at `s3://airborne-obj-detection-challenge-training/`.
 
 **In order to ease access to you as participant, we have added some helper scripts which will help you download the dataset on need basis.
 You can simply load all the ground_truth files and download dataset flight by flight.**
@@ -121,9 +122,17 @@ This library will provide you quick access and download only the files you requi
 
 ```python
 from core.dataset import Dataset
-dataset = Dataset(local_path='data/part1', s3_path='s3://airborne-obj-detection-challenge-training/part1/')
-dataset.add(local_path='data/part2', s3_path='s3://airborne-obj-detection-challenge-training/part2/')
-dataset.add(local_path='data/part3', s3_path='s3://airborne-obj-detection-challenge-training/part3/')
+dataset = Dataset(local_path='data/part1', s3_path='s3://airborne-obj-detection-challenge-training/part1/', prefix='part1')
+dataset.add(local_path='data/part2', s3_path='s3://airborne-obj-detection-challenge-training/part2/', prefix='part2')
+dataset.add(local_path='data/part3', s3_path='s3://airborne-obj-detection-challenge-training/part3/', prefix='part3')
+```
+
+Example for partial dataset:
+```python
+from core.dataset import Dataset
+dataset = Dataset(local_path='data/part1', s3_path='s3://airborne-obj-detection-challenge-training/part1/', prefix='part1', partial=True)
+dataset.add(local_path='data/part2', s3_path='s3://airborne-obj-detection-challenge-training/part2/', prefix='part2', partial=True)
+dataset.add(local_path='data/part3', s3_path='s3://airborne-obj-detection-challenge-training/part3/', prefix='part3', partial=True)
 ```
 
 NOTE: You don't need to have `groundtruth.json` pre-downloaded, it will automatically download, save and load them for you.
