@@ -23,10 +23,13 @@ class Dataset:
 
         self.metadata = gt["metadata"]
         for flight_id in gt["samples"].keys():
+            flight_id_with_prefix = flight_id
+            if self.prefix:
+                flight_id_with_prefix = self.prefix + flight_id
             if self.partial and flight_id not in self.valid_encounter:
                 logger.info("Skipping flight, not present in valid encounters: %s" % flight_id)
                 continue
-            self.flights[flight_id] = Flight(flight_id, gt["samples"][flight_id], self.file_handler, self.valid_encounter.get(flight_id), prefix=self.prefix)
+            self.flights[flight_id_with_prefix] = Flight(flight_id_with_prefix, gt["samples"][flight_id], self.file_handler, self.valid_encounter.get(flight_id), prefix=self.prefix)
 
     def load_ve(self):
         if self.partial:

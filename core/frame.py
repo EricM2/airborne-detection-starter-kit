@@ -51,12 +51,16 @@ class Frame:
         return len(self.detected_objects)
 
     def image_path(self):
+        flight_id = self.flight.id
         if self.flight.prefix:
-            return os.path.join('Images', self.flight.prefix + self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
-        return os.path.join('Images', self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
+            flight_id = self.flight.id.split(self.flight.prefix)[1]
+        return os.path.join('Images', self.flight.id, (str(self.timestamp) + flight_id + '.png'))
 
     def image_s3_path(self):
-        return os.path.join('Images', self.flight.id, (str(self.timestamp) + str(self.flight.id) + '.png'))
+        flight_id = self.flight.id
+        if self.flight.prefix:
+            flight_id = self.flight.id.split(self.flight.prefix)[1]
+        return os.path.join('Images', flight_id, (str(self.timestamp) + flight_id + '.png'))
 
     def image(self, type='pil'):
         """
