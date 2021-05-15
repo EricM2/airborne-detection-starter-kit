@@ -5,9 +5,17 @@ sys.path.append(os.path.realpath(os.getcwd()))
 from core.dataset import Dataset
 
 if __name__ == "__main__":
-    dataset = Dataset(local_path='data/part1', s3_path='s3://airborne-obj-detection-challenge-training/part1/')
-    dataset.add(local_path='data/part2', s3_path='s3://airborne-obj-detection-challenge-training/part2/')
-    dataset.add(local_path='data/part3', s3_path='s3://airborne-obj-detection-challenge-training/part3/')
+    option = input("Download full dataset (y/Y) or partial dataset (n/N)? ")
+    if option.lower() == 'y':
+        print("Downloading full dataset...")
+        partial=False
+    else:
+        print("Downloading partial dataset...")
+        partial=True
+
+    dataset = Dataset(local_path='data/part1', s3_path='s3://airborne-obj-detection-challenge-training/part1/', prefix='part1', partial=partial)
+    dataset.add(local_path='data/part2', s3_path='s3://airborne-obj-detection-challenge-training/part2/', prefix='part2')
+    dataset.add(local_path='data/part3', s3_path='s3://airborne-obj-detection-challenge-training/part3/', prefix='part3')
 
     i = 1
     all_flights = dataset.get_flight_ids()
