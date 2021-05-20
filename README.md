@@ -110,11 +110,12 @@ The `aicrowd.json` of each submission should contain the following content:
 
 ```json
 {
-  "challenge_id": "airborne-detection-challenge",
-  "authors": ["your-aicrowd-username"],
-  "description": "sample description about your awesome agent",
-  "license": "MIT",
-  "gpu": true
+  "challenge_id": "evaluations-api-airborne",
+  "grader_id": "evaluations-api-airborne",
+  "authors": ["aicrowd-bot"],
+  "tags": "change-me",
+  "description": "Random prediction model for Airborne challenge",
+  "gpu": false
 }
 ```
 

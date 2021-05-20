@@ -33,9 +33,9 @@ Then you can create a submission by making a _tag push_ to your repository on [h
 Then you can add the correct git remote, and finally submit by doing :
 
 ```
-cd airborne_detection_starter_template
+cd airborne-detection-starter-kit
 # Add AIcrowd git remote endpoint
-git remote add aicrowd git@gitlab.aicrowd.com:<YOUR_AICROWD_USER_NAME>/airborne_detection_starter_template.git
+git remote add aicrowd git@gitlab.aicrowd.com:<YOUR_AICROWD_USER_NAME>/airborne-detection-starter-kit.git
 git push aicrowd master
 ```
 
@@ -50,7 +50,7 @@ git push aicrowd submission-v0.1
 ```
 
 You now should be able to see the details of your submission at :
-[gitlab.aicrowd.com/<YOUR_AICROWD_USER_NAME>/airborne_detection_starter_template/issues](gitlab.aicrowd.com//<YOUR_AICROWD_USER_NAME>/airborne_detection_starter_template/issues)
+[gitlab.aicrowd.com/<YOUR_AICROWD_USER_NAME>/airborne-detection-starter-kit/issues](gitlab.aicrowd.com//<YOUR_AICROWD_USER_NAME>/airborne-detection-starter-kit/issues)
 
 **NOTE**: Remember to update your username instead of `<YOUR_AICROWD_USER_NAME>` above :wink:
 
