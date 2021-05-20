@@ -36,7 +36,7 @@ class AirbornePredictor:
         self.test_data_path = os.getenv("TEST_DATASET_PATH", os.getcwd() + "/data/val/")
         self.inference_output_path = self.get_results_directory()
         self.inference_setup_timeout = int(os.getenv("INFERENCE_SETUP_TIMEOUT_SECONDS", "600"))
-        self.inference_flight_timeout = int(os.getenv("INFERENCE_PER_FLIGHT_TIMEOUT_SECONDS", "1000"))
+        self.inference_flight_timeout = int(os.getenv("INFERENCE_PER_FLIGHT_TIMEOUT_SECONDS", "600"))
         self.partial_run = os.getenv("PARTIAL_RUN_FLIGHTS", None)
         self.results = []
         self.current_flight_results = []
