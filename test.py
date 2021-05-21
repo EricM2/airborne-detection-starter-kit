@@ -50,6 +50,8 @@ class RandomPredictor(AirbornePredictor):
             j -= 1
             if j > 0:
                 confidence = random.uniform(0.7, 1)
+                # Please case your bbox & confidence values to json serializable class
+                # Ex: np.float32 -> float, etc
                 self.register_object_and_location(class_name, track_id, bbox, confidence, frame_image)
 
 
