@@ -19,7 +19,7 @@ class RandomPredictor(AirbornePredictor):
     PARTICIPANT_TODO:
     You can do any preprocessing required for your codebase here like loading up models into memory, etc.
     """
-    def predict_setup(self):
+    def inference_setup(self):
         random.seed(42)
         pass
 
