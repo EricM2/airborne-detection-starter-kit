@@ -33,7 +33,9 @@ class RandomPredictor(AirbornePredictor):
         
         class_name = random.choice(["Airplane1", "Helicopter1"])
         track_id = random.randint(0, 3)
-        bbox = [random.uniform(1300, 1500), random.uniform(1000, 1200), random.uniform(50, 100), random.uniform(50, 100)]
+        bbox = [random.uniform(1300, 1500), random.uniform(1000, 1200)]
+        bbox.append(bbox[0] + random.uniform(50, 100))
+        bbox.append(bbox[1] + random.uniform(50, 100))
 
         i = random.randint(500, 900)
         j = random.randint(100, 200)
@@ -52,6 +54,7 @@ class RandomPredictor(AirbornePredictor):
                 confidence = random.uniform(0.7, 1)
                 # Please case your bbox & confidence values to json serializable class
                 # Ex: np.float32 -> float, etc
+                # bbox format is [x0, y0, x1, y1] (top, left, bottom, right)
                 self.register_object_and_location(class_name, track_id, bbox, confidence, frame_image)
 
 
