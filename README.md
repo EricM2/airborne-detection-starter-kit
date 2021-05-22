@@ -26,7 +26,7 @@ Clone the repository to compete now!
 4. [How do I specify my software runtime / dependencies?](#how-do-i-specify-my-software-runtime-dependencies-)
 5. [What should my code structure be like ?](#what-should-my-code-structure-be-like-)
 6. [How to make submission](#how-to-make-submission)
-7. [Other concepts](#other-concepts)
+7. [Other concepts and FAQs](#other-concepts)
 8. [Important links](#-important-links)
 
 
@@ -140,6 +140,9 @@ You need to make sure that your model can predict airborne objects for each flig
 
 You can also test end to end evaluation on your own systems. The scripts are available in `core/metrics` folder.
 
+## Frequently Asked Questions
+
+We have curated frequently asked questions and common mistakes on Discourse, you can read them here: [FAQ and Common mistakes](https://discourse.aicrowd.com/t/faqs-and-common-mistakes-while-making-a-submission/5781)
 
 # 📎 Important links
 
