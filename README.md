@@ -132,15 +132,16 @@ Please specify if your code will use a GPU or not for the evaluation of your mod
 
 # SiamMOT baseline
 
-This repository contains [SiamMOT](https://github.com/amazon-research/siam-mot) baseline interface which you can submit and improve upon.
+[SiamMOT](https://github.com/amazon-research/siam-mot) is a region-based Siamese Multi-Object Tracking network that detects and associates object instances simultaneously.
 
-SiamMOT is a region-based Siamese Multi-Object Tracking network that detects and associates object instances simultaneously.
+This repository contains [SiamMOT](https://github.com/amazon-research/siam-mot) baseline interface which you can submit and improve upon.
 
 ## Additional Steps
 
 1. Change your entrypoint i.e. `run.sh` from `python test.py` to `python siam_mot_test.py`.
 2. Copy the Dockerfile present in `siam-mot/Dockerfile` to repository root.
-3. Follow common steps shared in [SUBMISSION.md](/docs/SUBMISSION.md)
+3. Set `gpu: true` in your `aicrowd.yaml`.
+4. Follow common steps shared in [SUBMISSION.md](/docs/SUBMISSION.md)
 
 ```
 #> cp siam-mot/Dockerfile Dockerfile
@@ -160,25 +161,6 @@ You can also test end to end evaluation on your own systems. The scripts are ava
 
 We have curated frequently asked questions and common mistakes on Discourse, you can read them here: [FAQ and Common mistakes](https://discourse.aicrowd.com/t/faqs-and-common-mistakes-while-making-a-submission/5781)
 
-
-# SiamMOT baseline
-
-[SiamMOT](https://github.com/amazon-research/siam-mot) is a region-based Siamese Multi-Object Tracking network that detects and associates object instances simultaneously.
-
-This repository contains [SiamMOT](https://github.com/amazon-research/siam-mot) baseline interface which you can submit and improve upon.
-
-SiamMOT is a region-based Siamese Multi-Object Tracking network that detects and associates object instances simultaneously.
-
-## How to submit SiamMOT
-
-1. Change your entrypoint i.e. `run.sh` from `python test.py` to `python siam_mot_test.py`.
-2. Copy the Dockerfile present in `siam-mot/Dockerfile` to repository root.
-3. Set `gpu: true` in your `aicrowd.yaml`.
-4. Follow common steps shared in [SUBMISSION.md](/docs/SUBMISSION.md)
-
-```
-#> cp siam-mot/Dockerfile Dockerfile
-```
 
 # 📎 Important links
 
