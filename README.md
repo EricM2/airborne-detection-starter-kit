@@ -173,7 +173,8 @@ SiamMOT is a region-based Siamese Multi-Object Tracking network that detects and
 
 1. Change your entrypoint i.e. `run.sh` from `python test.py` to `python siam_mot_test.py`.
 2. Copy the Dockerfile present in `siam-mot/Dockerfile` to repository root.
-3. Follow common steps shared in [SUBMISSION.md](/docs/SUBMISSION.md)
+3. Set `gpu: true` in your `aicrowd.yaml`.
+4. Follow common steps shared in [SUBMISSION.md](/docs/SUBMISSION.md)
 
 ```
 #> cp siam-mot/Dockerfile Dockerfile
