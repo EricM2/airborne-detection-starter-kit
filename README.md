@@ -136,6 +136,10 @@ Please specify if your code will use a GPU or not for the evaluation of your mod
 
 This repository contains [SiamMOT](https://github.com/amazon-research/siam-mot) baseline interface which you can submit and improve upon.
 
+> :warning: Please note that identical SiamMOT models (with delta <= 1.5% in EDR or AFDR) might be disqualified from winning the prize.
+>
+> An identical model is a model that uses the exact same code and config file provided with the baseline.
+
 ## Additional Steps
 
 1. Change your entrypoint i.e. `run.sh` from `python test.py` to `python siam_mot_test.py`.
