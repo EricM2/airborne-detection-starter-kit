@@ -161,6 +161,12 @@ You need to make sure that your model can predict airborne objects for each flig
 
 You can also test end to end evaluation on your own systems. The scripts are available in `core/metrics` folder.
 
+## Hardware used for evaluations
+
+We use p3.2xlarge to run your evaluations i.e. 8 vCPU, 61 GB RAM, V100 GPU.
+
+*(please enable GPU by putting "gpu": true in your aicrowd.json file)*
+
 ## Frequently Asked Questions
 
 We have curated frequently asked questions and common mistakes on Discourse, you can read them here: [FAQ and Common mistakes](https://discourse.aicrowd.com/t/faqs-and-common-mistakes-while-making-a-submission/5781)
